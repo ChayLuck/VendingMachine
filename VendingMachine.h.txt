@@ -1,0 +1,11 @@
+#pragma once
+#ifndef VENDINGMACHINE_H
+#define VENDINGMACHINE_H
+
+class VendingMachine {
+public:
+    virtual void selectProduct() = 0;
+    virtual void dispenseProduct() = 0;
+    virtual double getProductPrice(int productNumber) = 0;
+};
+#endif

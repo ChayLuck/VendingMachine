@@ -1,0 +1,120 @@
+#include "VendingMachine.h"
+#include "SnackVendingMachine.cpp"
+#include "DrinkVendingMachine.cpp"
+#include <iostream>
+#include <string>
+
+using namespace std;
+
+int main() {
+
+    int continueOption = 1;
+
+    while (continueOption == 1) {
+        int type;
+        int productNumber;
+        double amountPaid;
+        double totalAmountPaid = 0.0;
+
+        cout << "Welcome to the Vending Machine!" << endl;
+        cout << "Please choose a type: (1:snack    2:drink) ";
+        cin >> type;
+
+        if (type == 1) {
+            SnackVendingMachine snackMachine;
+            VendingMachine* vendingMachine = &snackMachine;
+
+            vendingMachine->selectProduct();
+            cout << "Please choose the number of the product: ";
+            cin >> productNumber;
+
+            double productPrice = vendingMachine->getProductPrice(productNumber);
+            if (productPrice == 0.0) {
+                cout << "Invalid product number selected." << endl;
+                return 0;
+            }
+
+            cout << "Product price: $" << productPrice << endl;
+
+            cout << "Please enter the amount paid: $";
+            cin >> amountPaid;
+
+            totalAmountPaid += amountPaid;
+
+            while (totalAmountPaid < productPrice) {
+                double remainingAmount = productPrice - totalAmountPaid;
+                cout << "(0 to cancel)/ You paid insufficient money! Please enter the remaining amount: $" << remainingAmount << endl;
+                cin >> amountPaid;
+                totalAmountPaid += amountPaid;
+                if (amountPaid == 0) {
+                    cout << "order canceled, returning your money: $" << totalAmountPaid << endl;
+                    return 0;
+                }
+            }
+
+            double change = totalAmountPaid - productPrice;
+            vendingMachine->dispenseProduct();
+            cout << "Dispensed product." << endl;
+            cout << "Change: $" << change << endl;
+
+            if (change > 0) {
+                cout << "Don't forget to take your change!" << endl;
+            }
+        }
+        else if (type == 2) {
+            DrinkVendingMachine drinkMachine;
+            VendingMachine* vendingMachine = &drinkMachine;
+
+            vendingMachine->selectProduct();
+            cout << "Please choose the number of the product: ";
+            cin >> productNumber;
+
+            double productPrice = vendingMachine->getProductPrice(productNumber);
+            if (productPrice == 0.0) {
+                cout << "Invalid product number selected." << endl;
+                return 0;
+            }
+
+            cout << "Product price: $" << productPrice << endl;
+
+            cout << "Please enter the amount paid: $";
+            cin >> amountPaid;
+
+            totalAmountPaid += amountPaid;
+
+            while (totalAmountPaid < productPrice) {
+                double remainingAmount = productPrice - totalAmountPaid;
+                cout << "(0 to cancel) / You paid insufficient money! Please enter the remaining amount: $" << remainingAmount << endl;
+                cin >> amountPaid;
+                totalAmountPaid += amountPaid;
+                if (amountPaid == 0) {
+                    cout << "Order canceled, returning your money: $" << totalAmountPaid << endl;
+                    return 0;
+                }
+
+            }
+
+            double change = totalAmountPaid - productPrice;
+            vendingMachine->dispenseProduct();
+            cout << "Dispensed product." << endl;
+            cout << "Change: $" << change << endl;
+
+            if (change > 0) {
+                cout << "Don't forget to take your change!" << endl;
+            }
+        }
+        else {
+            cout << "Invalid type selected." << endl;
+            return 0;
+        }
+
+        cout << "Do you want to continue? (1:yes    2:no) ";
+        cin >> continueOption;
+
+        if (continueOption == 2) {
+            cout << "Thanks. Have a nice day!" << endl;
+        }
+    }
+
+    return 0;
+}

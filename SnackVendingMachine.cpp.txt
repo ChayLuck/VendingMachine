@@ -1,0 +1,31 @@
+#include "VendingMachine.h"
+#include <iostream>
+#include <string>
+
+using namespace std;
+
+class SnackVendingMachine : public VendingMachine {
+private:
+    string snacks[7] = { "albeni", "biskrem", "ikram", "cizi", "gong", "benimo", "karam" };
+    double snackPrices[7] = { 1.5, 3.0, 2.0, 2.25, 2.5, 2.75, 2.0 };
+
+public:
+    void selectProduct() override {
+        cout << "Selecting a snack product..." << endl;
+        cout << "Available snacks: " << endl;
+        for (int i = 0; i < 7; ++i) {
+            cout << i + 1 << ". " << snacks[i] << endl;
+        }
+    }
+
+    void dispenseProduct() override {
+        cout << "Dispensing a snack product..." << endl;
+    }
+
+    double getProductPrice(int productNumber) override {
+        if (productNumber >= 1 && productNumber <= 7) {
+            return snackPrices[productNumber - 1];
+        }
+        return 0.0;
+    }
+};
